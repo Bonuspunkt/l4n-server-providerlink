@@ -1,0 +1,17 @@
+    tlsClient: {
+        ca: readFileSync('.keys/ca-crt.pem'),
+        key: readFileSync('.keys/client-key.pem'),
+        cert: readFileSync('.keys/client-crt.pem'),
+
+        checkServerIdentity: (host, cert) => {
+            // allow signed for ip
+            if (host === cert.subject.CN) return;
+            throw Error('invalid cert');
+        },
+    },
+
+    udpScanner: {
+        hostPort: 20000,
+        targetPort: 19999,
+        scanInterval: 30e3,
+    },

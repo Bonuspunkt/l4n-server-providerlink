@@ -1,47 +1,50 @@
 import React from 'react';
 
-import GameDisplay from './GameDisplay';
+if (process.env.BROWSER) require('./AvailableServers.styl');
 
-const AvailableServers = props => {
-    const { providers, user } = props;
-    const servers = providers
-        .map(provider => provider.games.map(game => ({ provider: provider.name, game })))
-        .reduce((prev, curr) => prev.concat(curr), []);
-
-    return (
-        <article>
-            <h2>Available Servers</h2>
-            <table>
-                <tbody>
-                    {servers.map(server => (
-                        <AvailableServer
-                            key={server.provider + ':' + server.game.id}
-                            {...server}
-                            showOpenLobby={user}
-                        />
-                    ))}
-                </tbody>
-            </table>
-        </article>
-    );
-};
-
-const AvailableServer = ({ provider, game, showOpenLobby }) => {
+const AvailableDefinition = ({ provider, server, showOpenLobby }) => {
     const openLobby = showOpenLobby ? (
-        <a className="button" href={`/provider/${provider}/game/${game.id}`}>
+        <a className="button" href={`/provider/${provider}/game/${server.id}`}>
             open lobby
         </a>
     ) : null;
 
     return (
-        <tr>
-            <td>{provider}</td>
-            <td className="noPad">
-                <GameDisplay {...game} />
-            </td>
-            <td>{game.name}</td>
-            <td>{openLobby}</td>
-        </tr>
+        <li className="availableServer">
+            <div className="availableServer-provider">{provider}</div>
+            <div className="availableServer-name">{server.lobby.game}</div>
+            <div className="availableServer-mode">{server.lobby.mode}</div>
+            <div className="availableServer-action">{openLobby}</div>
+        </li>
+    );
+};
+
+const AvailableServers = props => {
+    const { providers, user } = props;
+    const servers = providers
+        .map(provider => provider.servers.map(server => ({ provider: provider.name, server })))
+        .reduce((prev, curr) => prev.concat(curr), []);
+
+    return (
+        <article>
+            <h2>Available Servers</h2>
+            <ul className="availableServers">
+                <li className="availableServer lobbyRowHeader">
+                    <div className="availableServer-provider">Provider</div>
+                    <div className="availableServer-name">Game</div>
+                    <div className="availableServer-mode">Mode</div>
+                    <div className="availableServer-action" />
+                </li>
+                {servers.map(({ provider, server }) => (
+                    <AvailableDefinition
+                        key={`${provider.name}:${server.id}`}
+                        provider={provider}
+                        server={server}
+                        showOpenLobby={user}
+                    />
+                ))}
+            </ul>
+        </article>
     );
 };
 
