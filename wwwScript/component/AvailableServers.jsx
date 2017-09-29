@@ -4,7 +4,7 @@ if (process.env.BROWSER) require('./AvailableServers.styl');
 
 const AvailableDefinition = ({ provider, server, showOpenLobby }) => {
     const openLobby = showOpenLobby ? (
-        <a className="button" href={`/provider/${provider}/game/${server.id}`}>
+        <a className="button" href={`/provider/${provider}/server/${server.id}`}>
             open lobby
         </a>
     ) : null;
@@ -20,10 +20,12 @@ const AvailableDefinition = ({ provider, server, showOpenLobby }) => {
 };
 
 const AvailableServers = props => {
-    const { providers, user } = props;
+    const { providers, lobbies, user } = props;
     const servers = providers
         .map(provider => provider.servers.map(server => ({ provider: provider.name, server })))
         .reduce((prev, curr) => prev.concat(curr), []);
+
+    const showOpenLobby = user && lobbies.every(lobby => !lobby.users.includes(user.id));
 
     return (
         <article>
@@ -40,7 +42,7 @@ const AvailableServers = props => {
                         key={`${provider.name}:${server.id}`}
                         provider={provider}
                         server={server}
-                        showOpenLobby={user}
+                        showOpenLobby={showOpenLobby}
                     />
                 ))}
             </ul>

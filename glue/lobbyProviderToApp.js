@@ -1,16 +1,22 @@
 module.exports = resolve => {
     const app = resolve('app');
     const lobbyRepo = resolve('lobbyRepo');
+    const lobbyProviderRepo = resolve('lobbyProviderRepo');
+    const providerUser = resolve('providerUser');
 
-    app.post('/provider/:provider/game/:game', (req, res) => {
-        const { provider, game } = req.params;
+    app.post('/provider/:provider/server/:server', (req, res) => {
+        const { body: lobby, user } = req;
+        const { provider, server } = req.params;
 
-        //lobbyRepo.createLobby
+        lobby.userId = providerUser.id;
 
-        //lobbyProvider.create({ lobbyId, provider, game })
-        //lobbyProvider.join({requestUser})
-        //lobbyProvider.part({ provider })
+        const createdLobby = lobbyRepo.create({ lobby, user });
+        lobbyProviderRepo.insert({
+            lobbyId: createdLobby.id,
+            provider,
+            server,
+        });
 
-        res.redirect(`/lobby/${lobbyId}`);
+        res.redirect(`/lobby/${createdLobby.id}`);
     });
 };

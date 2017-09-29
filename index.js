@@ -8,6 +8,8 @@ module.exports = ({ resolve, register }) => {
     const lobbyProviderRepo = new LobbyProviderRepo(resolve);
     register('lobbyProviderRepo', () => lobbyProviderRepo);
 
+    require('./glue/setup')({ resolve, register });
+
     require('./glue/lobbyProviderToApp')(resolve);
     require('./glue/lobbyProviderToStore')(resolve);
     require('./glue/udpScannerToStores')(resolve);

@@ -5,7 +5,7 @@ import CsrfToken from 'l4n-server/component/CsrfToken';
 import CommonMark from 'l4n-server/component/CommonMark';
 
 const CreateProviderLobby = props => {
-    const { providers, provider: providerName, game: gameId } = props;
+    const { providers, provider: providerName, server: gameId } = props;
 
     const provider = providers.find(provider => provider.name === providerName);
     if (!provider) {
@@ -29,7 +29,7 @@ const CreateProviderLobby = props => {
     return (
         <DefaultLayout {...props} title={'Create Lobby'}>
             <h1>create lobby</h1>
-            <form method="POST" action={`/provider/${providerName}/game/${server.id}`}>
+            <form method="POST" action={`/provider/${providerName}/server/${server.id}`}>
                 <CsrfToken {...props} />
                 <label className="formField">
                     <span className="formField-label">game</span>
@@ -58,6 +58,7 @@ const CreateProviderLobby = props => {
                         type="text"
                         name="name"
                         required
+                        autoFocus
                         placeholder="ex. real life simulator 2020"
                     />
                 </label>

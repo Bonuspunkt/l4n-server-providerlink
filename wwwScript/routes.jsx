@@ -6,7 +6,7 @@ import CreateProviderLobby from './view/CreateProviderLobby';
 
 const routes = [
     {
-        pattern: '/provider/:provider/game/:game',
+        pattern: '/provider/:provider/server/:server',
         Component: CreateProviderLobby,
     },
 ];
