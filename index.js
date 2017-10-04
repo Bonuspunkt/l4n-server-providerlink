@@ -10,7 +10,8 @@ module.exports = ({ resolve, register }) => {
 
     require('./glue/setup')({ resolve, register });
 
-    require('./glue/lobbyProviderToApp')(resolve);
-    require('./glue/lobbyProviderToStore')(resolve);
+    require('./glue/appTolobbyProviderRepo')(resolve);
+    require('./glue/lobbyProviderRepoToStore')(resolve);
+    require('./glue/lobbyRepoToTlsClient')(resolve);
     require('./glue/udpScannerToStores')(resolve);
 };

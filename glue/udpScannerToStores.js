@@ -9,6 +9,8 @@ module.exports = function(resolve) {
         }
     };
 
+    const lobbyRepo = resolve('lobbyRepo');
+    const providerUser = resolve('providerUser');
     const publicStore = resolve('publicStore');
     const privateStore = resolve('privateStore');
     publicStore.dispatch(state => ({ ...state, providers: [] }));
@@ -49,6 +51,13 @@ module.exports = function(resolve) {
             publicStore.dispatch(merge({ ...provider, key }));
         });
         client.on('update', (...args) => debug('update', ...args));
+        client.on('spawned', ({ lobbyId, privateInfo }) => {
+            lobbyRepo.changeState({ lobbyId, newState: 2, userId: providerUser.id, privateInfo });
+        });
+        client.on('destroy', ({ lobbyId }) => {
+            debug(`destroy lobbyId: ${lobbyId}`);
+            lobbyRepo.destroy({ lobbyId, userId: providerUser.id });
+        });
     });
 
     udpScanner.start();
