@@ -1,5 +1,5 @@
 const TlsClient = require('../lib/TlsClient');
-const debug = require('debug')('l4n:server:glue:udpScannerFound');
+const debug = require('debug')('l4n:server:glue:udpScannerToStores');
 
 module.exports = function(resolve) {
     const getClient = protocol => {
