@@ -11,9 +11,11 @@
   "license": "MIT",
   "dependencies": {
     "debug": "^3.1.0",
-    "l4n-common": "0.0.0"
+    "l4n-common": "0.0.0",
+    "node-gyp": "^3.6.2"
   },
   "devDependencies": {
+    "better-sqlite3": "^4.0.3",
     "chai": "^4.1.2",
     "eslint": "4.8.0",
     "eslint-plugin-prettier": "^2.3.1",
