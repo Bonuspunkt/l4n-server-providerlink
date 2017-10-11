@@ -91,7 +91,9 @@ const CreateProviderLobby = props => {
                 </label>
                 <label className="formField">
                     <span className="formField-label" />
-                    <button type="submit">create lobby</button>
+                    <button data-action="createProviderLobby" type="submit">
+                        create lobby
+                    </button>
                 </label>
             </form>
         </DefaultLayout>
