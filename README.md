@@ -1,30 +1,6 @@
-# l4n-server-providerLink
-- generate keys (see `l4n-cert`)
+# l4n-server-providerlink
+[![Build Status](https://travis-ci.org/Bonuspunkt/l4n-server-providerlink.svg?branch=master)](https://travis-ci.org/Bonuspunkt/l4n-server-providerlink)
 
-## config
-``` js
-const { readFileSync } = require('fs');
+provides a link between `l4n-server` and `l4n-provider`
 
-module.exports = {
-    plugins: [
-        // ...
-        'l4n-server-providerlink',
-    ],
-    // ...
-    tlsClient: {
-        ca: undefined, // readFileSync('.keys/ca-crt.pem'),
-        key: undefined, // readFileSync('.keys/client-key.pem'),
-        cert: undefined, // readFileSync('.keys/client-crt.pem'),
-        checkServerIdentity: (host, cert) => {
-            // allow signed for ip
-            if (host === cert.subject.CN) return;
-            throw Error('invalid cert');
-        },
-    },
-    udpScanner: {
-        hostPort: 20000,
-        targetPort: 19999,
-        scanInterval: 30e3,
-    },
-};
-```
+for key setup look at `l4n-cert`
