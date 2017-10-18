@@ -73,5 +73,14 @@
   },
   "directories": {
     "lib": "lib"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bonuspunkt/l4n-server-providerlink.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Bonuspunkt/l4n-server-providerlink/issues"
+  },
+  "homepage": "https://github.com/Bonuspunkt/l4n-server-providerlink#readme"
 }
