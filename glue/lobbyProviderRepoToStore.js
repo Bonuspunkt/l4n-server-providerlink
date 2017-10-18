@@ -8,8 +8,8 @@ module.exports = resolve => {
         lobbies: state.lobbies.map(lobby => {
             const lobbyProvider = lobbyProviders.find(lb => lb.lobbyId === lobby.id);
             if (!lobbyProvider) return lobby;
-            const { provider, definition } = lobbyProvider;
-            return { ...lobby, provider, definition };
+            const { provider, server } = lobbyProvider;
+            return { ...lobby, provider, server };
         }),
     }));
 
@@ -18,8 +18,8 @@ module.exports = resolve => {
             ...state,
             lobbies: state.lobbies.map(lobby => {
                 if (lobby.id !== lobbyProvider.lobbyId) return lobby;
-                const { provider, definition } = lobbyProvider;
-                return { ...lobby, provider, definition };
+                const { provider, server } = lobbyProvider;
+                return { ...lobby, provider, server };
             }),
         })),
     );
