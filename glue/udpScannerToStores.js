@@ -2,6 +2,8 @@ const TlsClient = require('../lib/TlsClient');
 const debug = require('debug')('l4n:server:glue:udpScannerToStores');
 
 module.exports = function(resolve) {
+    const checkStartCondition = require('../lib/checkStartCondition')(resolve);
+
     const getClient = protocol => {
         switch (protocol) {
             case 'tls':
@@ -49,6 +51,12 @@ module.exports = function(resolve) {
         client.on('status', provider => {
             privateStore.dispatch(merge({ name: provider.name, key, client }));
             publicStore.dispatch(merge({ ...provider, key }));
+
+            // check for waiting lobbies
+            publicStore
+                .getState()
+                .lobbies.filter(lobby => lobby.provider === provider.name)
+                .forEach(lobby => checkStartCondition(lobby));
         });
         client.on('update', (...args) => debug('update', ...args));
         client.on('spawned', ({ lobbyId, privateInfo }) => {
